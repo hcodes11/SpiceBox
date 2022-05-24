@@ -26,7 +26,7 @@ namespace SpiceBox
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            // add transients(repos) & token
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -39,6 +39,7 @@ namespace SpiceBox
         {
             if (env.IsDevelopment())
             {
+                // add cors stuff
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SpiceBox v1"));
@@ -48,6 +49,7 @@ namespace SpiceBox
 
             app.UseRouting();
 
+            //app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
