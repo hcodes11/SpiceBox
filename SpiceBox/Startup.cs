@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using SpiceBox.Repos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace SpiceBox
         public void ConfigureServices(IServiceCollection services)
         {
             // add transients(repos) & token
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IRecipeRepository, RecipeRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
