@@ -20,14 +20,14 @@ namespace SpiceBox.Controllers
         }
 
         // https://localhost:5001/api/recipe/
-        [HttpGet]
+        [HttpGet("all")]
         public IActionResult Get()
         {
             return Ok(_recipeRepository.GetAll());
         }
 
         // https://localhost:5001/api/recipe/5
-        [HttpGet("{id}")]
+        [HttpGet("Id/{id}")]
         public IActionResult Get(int id)
         {
             var recipe = _recipeRepository.Get(id);
@@ -39,7 +39,7 @@ namespace SpiceBox.Controllers
         }
 
         // https://localhost:5001/api/recipe/
-        [HttpPost("{id}")]
+        [HttpPost]
         public IActionResult Post([FromBody] Recipe recipe)
         {
             _recipeRepository.Add(recipe);

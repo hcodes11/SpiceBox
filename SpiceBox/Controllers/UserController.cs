@@ -20,14 +20,14 @@ namespace SpiceBox.Controllers
         }
 
         // https://localhost:5001/api/user/
-        [HttpGet]
+        [HttpGet("all")]
         public IActionResult Get()
         {
             return Ok(_userRepository.GetAll());
         }
 
         // https://localhost:5001/api/user/5
-        [HttpGet("{firebaseId}")]
+        [HttpGet("FirebaseId/{firebaseId}")]
         public IActionResult Get(string firebaseId)
         {
             var user = _userRepository.GetUserByFirebaseID(firebaseId);
@@ -39,7 +39,7 @@ namespace SpiceBox.Controllers
         }
 
         // https://localhost:5001/api/user/
-        [HttpPost("{id}")]
+        [HttpPost]
         public IActionResult Post([FromBody] User user)
         {
             _userRepository.Add(user);
@@ -47,7 +47,7 @@ namespace SpiceBox.Controllers
         }
 
         // https://localhost:5001/api/user/5
-        [HttpGet("{id}")]
+        [HttpGet("Id/{id}")]
         public IActionResult Get(int id)
         {
             var user = _userRepository.GetById(id);
