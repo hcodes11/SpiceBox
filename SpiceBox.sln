@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32510.428
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpiceBox", "SpiceBox\SpiceBox.csproj", "{1BCAF7B1-853A-466F-882A-ACEF98920984}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpiceBox", "SpiceBox\SpiceBox.csproj", "{1BCAF7B1-853A-466F-882A-ACEF98920984}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "SpiceBoxClient", "SpiceBoxClient\SpiceBoxClient.esproj", "{1FDDDCA7-A1AB-4B27-95C2-A88BF91B45F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,12 @@ Global
 		{1BCAF7B1-853A-466F-882A-ACEF98920984}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BCAF7B1-853A-466F-882A-ACEF98920984}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BCAF7B1-853A-466F-882A-ACEF98920984}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FDDDCA7-A1AB-4B27-95C2-A88BF91B45F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FDDDCA7-A1AB-4B27-95C2-A88BF91B45F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FDDDCA7-A1AB-4B27-95C2-A88BF91B45F1}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1FDDDCA7-A1AB-4B27-95C2-A88BF91B45F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FDDDCA7-A1AB-4B27-95C2-A88BF91B45F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FDDDCA7-A1AB-4B27-95C2-A88BF91B45F1}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
