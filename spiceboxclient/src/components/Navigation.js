@@ -15,6 +15,13 @@ export default function Navigation() {
         >
           Home
         </button>
+        <button
+          onClick={() => navigate('/recipe')}
+          type="button"
+          className="btn btn-light border border-dark"
+        >
+          Add a Recipe
+        </button>
       </ButtonGroup>
     </div>
   );

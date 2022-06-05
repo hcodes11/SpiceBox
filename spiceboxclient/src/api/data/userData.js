@@ -8,4 +8,26 @@ const getAllUsers = async () => {
   return userData;
 };
 
-export default getAllUsers;
+const getSingleUser = (uid) =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(`${dbURL}/User/Id/${uid}`)
+      .then((response) => resolve(response.data))
+      .catch(reject);
+  });
+
+  const createUser = (user) =>
+  new Promise((resolve, reject) => {
+    axios.post(`${dbURL}/user`, user).then(resolve).catch(reject);
+  });
+
+const updateUser = (uid, user) =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(`${dbURL}/user/${uid}`, user)
+      .then(() => getSingleUser(uid))
+      .then(resolve)
+      .catch(reject);
+  });
+
+export { getAllUsers, getSingleUser, createUser, updateUser };
