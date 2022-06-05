@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { ButtonGroup } from 'reactstrap';
+import { signOutUser } from '../api/data/auth/firebaseLogin';
 
 export default function Navigation() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export default function Navigation() {
         >
           Add a Recipe
         </button>
+        <button type='button' onClick={signOutUser}>Sign Out</button>
       </ButtonGroup>
     </div>
   );
