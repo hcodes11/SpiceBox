@@ -113,6 +113,7 @@ namespace SpiceBox.Repos
                     cmd.Parameters.AddWithValue("@comments", recipe.Comments);
                     cmd.Parameters.AddWithValue("@userid", recipe.UserId);
                     recipe.Id = (int)cmd.ExecuteScalar();
+
                 }
             }
         }
@@ -145,7 +146,7 @@ namespace SpiceBox.Repos
                     cmd.Parameters.AddWithValue("@comments", recipe.Comments);
                     cmd.Parameters.AddWithValue("@userid", recipe.UserId);
 
-                    cmd.ExecuteNonQuery();
+                  
                 }
             }
         }

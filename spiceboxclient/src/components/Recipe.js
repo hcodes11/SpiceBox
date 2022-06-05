@@ -8,6 +8,9 @@ export default function Recipe({ recipe }) {
       <Alert color="light">
         {recipe.name}
       </Alert>
+      <button className="btn btn-danger" type="button">
+          Delete
+        </button>
     </>
   );
 }
