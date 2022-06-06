@@ -3,10 +3,8 @@ import { getAllRecipes } from '../api/data/recipeData';
 import React, { useEffect, useState } from 'react';
 import Recipe from '../components/Recipe';
 
-
 function Home() {
   const [recipes, setRecipes] = useState([]);
-
   useEffect(() => {
     getAllRecipes().then(setRecipes)
   }, []);
@@ -14,10 +12,10 @@ function Home() {
   return (
     <>
     {recipes.map((recipe) => (
-      <Recipe key={recipe.name} recipe={recipe} />
+      <Recipe key={recipe.id} recipe={recipe} />
     ))}
     </>
   );
 }
 
-export default Home;
+export default Home; 

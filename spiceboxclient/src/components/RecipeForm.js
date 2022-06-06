@@ -1,23 +1,50 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { createRecipe } from '../api/data/recipeData';
-import {
-    Button, Form, FormGroup, Label, Input,
-  } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import auth from '../api/data/auth/firebaseConfig';
+import { createRecipe, getSingleRecipe, updateRecipe  } from '../api/data/recipeData';
+
 
 const initialState = {
   name: '',
-  imageURL: '',
+  imageUrl: '',
   time: '',
   favorite: '',
   ingredients: '',
   instructions: '',
-  comments: ''
+  comments: '',
+  userId:''
 };
 
 export default function RecipeForm() {
   const [formInput, setFormInput] = useState(initialState);
   const navigate = useNavigate();
+  const [uid, setUID] = useState(null);
+  const { recipeId } = useParams();
+
+  useEffect(() => {
+    if (recipeId) {
+      getSingleRecipe(recipeId).then((recipeObj) => {
+        setFormInput({
+          name: recipeObj.name,
+          imageUrl: recipeObj.imageUrl,
+          time: recipeObj.ime,
+          favorite: recipeObj.favorite,
+          ingredients: recipeObj.ingredients,
+          instructions: recipeObj.instructions,
+          comments: recipeObj.comments,
+          userId: recipeObj.userId
+        })
+      })
+    } else {
+      const currentUID = auth.currentUser?.uid;
+      setUID(currentUID);
+      setFormInput(initialState);
+    }
+  }, [])
+
+  const resetForm = () => {
+    setFormInput({ ...initialState });
+  };
 
   const handleChange = (e) => {
     setFormInput((prevState) => ({
@@ -28,101 +55,108 @@ export default function RecipeForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createRecipe({ ...formInput }).then(navigate('/'));
-  };
+    if (recipeId) {
+      updateRecipe(recipeId, formInput).then(() => {
+        resetForm();
+        navigate('/');
+      })
+    } else {
+      createRecipe({ ...formInput, userId: uid }).then(() => {
+        resetForm();
+        navigate('/');
+      })
+    }
+  }
  
     return (
         <>
-          <Form onSubmit={handleSubmit}>
-            <FormGroup>
-              <Label for="name">Recipe Name</Label>
-              <Input
-                onChange={(e) => handleChange(e)}
-                value={formInput.name ?? ""}
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Type Recipe name here..."
+          <h1>Recipe Form</h1>
+          <form onSubmit={handleSubmit}>
+          <div>
+            <div>
+              <input 
+              onChange={(e) => handleChange(e)}
+              value={formInput.name || ''}
+              type="text"
+              name="name"
+              placeholder="Type Recipe name here..."
+              required
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for="imageURL">ImageURL</Label>
-              <Input
-                onChange={(e) => handleChange(e)}
-                value={formInput.imageURL ?? ""}
-                type="url"
-                name="imageURL"
-                id="imageURL"
-                placeholder="Paste ImageURL here..."
+            </div>
+            <div>
+              <input 
+               onChange={(e) => handleChange(e)}
+               value={formInput.imageUrl || ''}
+               type="url"
+               name="imageUrl"
+               placeholder="Paste ImageURL here..."
+               required
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for="time">Time</Label>
-              <Input
-                onChange={(e) => handleChange(e)}
-                value={formInput.time ?? ""}
-                type="text"
-                name="time"
-                id="time"
-                placeholder="Total time to cook..."
+            </div>
+            <div>
+              <input 
+               onChange={(e) => handleChange(e)}
+               value={formInput.time || ''}
+               type="text"
+               name="time"
+               placeholder="Total time to cook..."
+               required
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for="favorite">Favorite</Label>
-              <Input
-                onChange={(e) => handleChange(e)}
-                value={formInput.favorite ?? ""}
-                type="text"
-                name="favorite"
-                id="favorite"
-                placeholder="Is this a favorite recipe?"
+            </div>
+            <div>
+              <input 
+               onChange={(e) => handleChange(e)}
+               value={formInput.favorite || ''}
+               type="text"
+               name="favorite"
+               placeholder="Is this a favorite recipe?"
+               required
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for="comments">Comments</Label>
-              <Input
-                onChange={(e) => handleChange(e)}
-                value={formInput.comments ?? ""}
-                type="textarea"
-                name="comments"
-                id="comments"
-                placeholder="Any comments on this recipe?"
+            </div>
+            <div>
+              <input 
+               onChange={(e) => handleChange(e)}
+               value={formInput.comments || ''}
+               type="textarea"
+               name="comments"
+               placeholder="Any comments on this recipe?"
+               required
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for="ingredients">Ingredients</Label>
-              <Input
-                onChange={(e) => handleChange(e)}
-                value={formInput.ingredients ?? ""}
-                type="textarea"
-                name="ingredients"
-                id="ingredients"
-                placeholder="List Ingredients here"
+            </div>
+            <div>
+              <input 
+               onChange={(e) => handleChange(e)}
+               value={formInput.ingredients || ''}
+               type="textarea"
+               name="ingredients"
+               placeholder="List Ingredients here"
+               required
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for="instructions">Instructions</Label>
-              <Input
-                onChange={(e) => handleChange(e)}
-                value={formInput.instructions ?? ""}
-                type="textarea"
-                name="instructions"
-                id="instructions"
-                placeholder="How to cook this recipe?"
+            </div>
+            <div>
+              <input 
+               onChange={(e) => handleChange(e)}
+               value={formInput.instructions || ''}
+               type="textarea"
+               name="instructions"
+               placeholder="How to cook this recipe?"
+               required
               />
-            </FormGroup>
-            <FormGroup>
-              <Label for="uid">User#</Label>
-              <Input
-                onChange={(e) => handleChange(e)}
-                value={formInput.uid ?? ""}
-                type="number"
-                name="uid"
-                id="uid"
+            </div>
+            <div>
+              <input 
+               onChange={(e) => handleChange(e)}
+               value={formInput.uid || ''}
+               type="number"
+               name="uid"
+               required
               />
-            </FormGroup>
-            <Button type="submit">Submit</Button>
-          </Form>
+            </div>
+            </div>
+            <button type='submit' className='btn btn-success'>
+              Submit
+            </button>
+            </form>
     </>
   );
   }

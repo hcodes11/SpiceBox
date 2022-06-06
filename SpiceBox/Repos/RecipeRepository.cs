@@ -93,6 +93,46 @@ namespace SpiceBox.Repos
             }
         }
 
+        public List<Recipe> GetAllUserRecipes(string uid)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Recipe.Id, Recipe.[Name], ImageUrl, Time, Favorite, Ingredients, Instructions, Comments, UserId,  [User].FirebaseId
+                                        FROM Recipe 
+                                        LEFT JOIN [User] ON [User].Id = Recipe.UserId
+                                        WHERE [User].FirebaseId =  @uid;";
+                    cmd.Parameters.AddWithValue("@uid", uid);
+
+                    var reader = cmd.ExecuteReader();
+
+                    var recipes = new List<Recipe>();
+                    while (reader.Read())
+                    {
+                        var recipe = new Recipe()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
+                            Time = reader.GetString(reader.GetOrdinal("Time")),
+                            Favorite = reader.GetBoolean(reader.GetOrdinal("Favorite")),
+                            Ingredients = reader.GetString(reader.GetOrdinal("Ingredients")),
+                            Instructions = reader.GetString(reader.GetOrdinal("Instructions")),
+                            Comments = reader.GetString(reader.GetOrdinal("Comments")),
+                            UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
+                        };
+                        recipes.Add(recipe);
+                    }
+
+                    reader.Close();
+
+                    return recipes;
+                }
+            }
+        }
+
         public void Add(Recipe recipe)
         {
             using (var conn = Connection)
@@ -146,7 +186,7 @@ namespace SpiceBox.Repos
                     cmd.Parameters.AddWithValue("@comments", recipe.Comments);
                     cmd.Parameters.AddWithValue("@userid", recipe.UserId);
 
-                  
+
                 }
             }
         }
