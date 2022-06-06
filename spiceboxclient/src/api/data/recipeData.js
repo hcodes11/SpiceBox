@@ -1,5 +1,5 @@
 import axios from 'axios';
-import userId from './auth/userId';
+import userId from './auth/UserId';
 const dbURL = "https://localhost:5001/api";
 
 const getAllRecipes = async () => {
@@ -40,7 +40,7 @@ const deleteRecipe = (RecipeId) =>
   new Promise((resolve, reject) => {
     axios
       .delete(`${dbURL}/recipe/${RecipeId}`)
-      .then(() => getAllUserRecipes(userId()).then(resolve))
+      .then(() => getAllUserRecipes(userId).then(resolve))
       .catch(reject);
   });
 

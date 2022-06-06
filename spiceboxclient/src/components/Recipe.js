@@ -13,6 +13,7 @@ export default function Recipe({ recipe, setRecipes }) {
     <>
       <Alert color="light">
         {recipe.name}
+        {recipe.id}
       </Alert>
       <button onClick={() => handleClick('delete')} className="btn btn-danger" type="button">
           Delete
