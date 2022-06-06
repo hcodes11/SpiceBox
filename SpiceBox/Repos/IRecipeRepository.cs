@@ -9,6 +9,7 @@ namespace SpiceBox.Repos
         void Delete(int id);
         Recipe Get(int id);
         List<Recipe> GetAll();
+        List<Recipe> GetAllUserRecipes(string uid);
         void Update(Recipe recipe);
     }
 }

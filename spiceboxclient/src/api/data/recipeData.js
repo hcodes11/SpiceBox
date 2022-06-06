@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import userId from './auth/userId';
 const dbURL = "https://localhost:5001/api";
 
 const getAllRecipes = async () => {
@@ -8,23 +8,17 @@ const getAllRecipes = async () => {
   return recipeData;
 };
 
-// const createRecipe = (recipe) =>
-//   new Promise((resolve, reject) => {
-//     axios.post(`${dbURL}/recipe`, recipe).then(resolve).catch(reject);
-//   });
+const getAllUserRecipes = async (uid) => {
+  const recipe = await axios.get(`${dbURL}/recipe/${uid}`);
+  const recipeData = recipe.data;
+  return recipeData;
+};
 
-const createRecipe = (recipeObj) => new Promise ((resolve, reject) => {
-    axios.post(`${dbURL}/recipe`, recipeObj)
-    .then((response) => {
-        if (response.status > 300 || response.status < 200) {
-            throw new Error(response.status);
-        } else {
-            resolve();
-        }
-    })
-    .catch(reject);
-})
 
+const createRecipe = (recipe) =>
+  new Promise((resolve, reject) => {
+    axios.post(`${dbURL}/recipe`, recipe).then(resolve).catch(reject);
+  });
 
   const getSingleRecipe = (RecipeId) =>
   new Promise((resolve, reject) => {
@@ -38,20 +32,21 @@ const createRecipe = (recipeObj) => new Promise ((resolve, reject) => {
   new Promise((resolve, reject) => {
     axios
       .put(`${dbURL}/recipe/id/${id}`, recipe)
-      .then(() => getAllRecipes().then(resolve))
+      .then(() => getSingleRecipe().then(resolve))
       .catch(reject);
   });
 
 const deleteRecipe = (RecipeId) =>
   new Promise((resolve, reject) => {
     axios
-      .delete(`${dbURL}/recipe/id/${RecipeId}`)
-      .then(() => getAllRecipes().then(resolve))
+      .delete(`${dbURL}/recipe/${RecipeId}`)
+      .then(() => getAllUserRecipes(userId()).then(resolve))
       .catch(reject);
   });
 
 export { 
     getAllRecipes, 
+    getAllUserRecipes,
     createRecipe, 
     getSingleRecipe, 
     updateRecipe, 

@@ -4,9 +4,19 @@ import Switch from './Switch';
 import Navigation from './components/Navigation';
 import auth from './api/data/auth/firebaseConfig';
 import SignIn from './views/SignIn';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+`;
 
 function App() {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
  
   useEffect(() => {
     auth.onAuthStateChanged(async (authed) => {
@@ -19,7 +29,8 @@ function App() {
         };
         setUser(userObj);
       } else if (user || user === null) {
-        setUser(false);        
+        setUser(false);  
+        navigate('/');      
       }
     });
   }, []);
@@ -27,12 +38,14 @@ function App() {
   return (
     <>
     {user ? (
+      <Container>
     <div className='App'>
       <Navigation user={user} />
       <div className='main-container'>
         <Switch user={user} />
       </div>
     </div>
+    </Container>
     ) : (
       <SignIn />
     )}

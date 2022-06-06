@@ -26,6 +26,17 @@ namespace SpiceBox.Controllers
             return Ok(_recipeRepository.GetAll());
         }
 
+        [HttpGet("{uid}")]
+        public IActionResult Get(string uid)
+        {
+            List<Recipe> recipes = _recipeRepository.GetAllUserRecipes(uid);
+            if (recipes == null)
+            {
+                return NotFound();
+            }
+            return Ok(recipes);
+        }
+
         // https://localhost:5001/api/recipe/5
         [HttpGet("Id/{id}")]
         public IActionResult Get(int id)
