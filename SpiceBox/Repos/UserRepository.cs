@@ -48,16 +48,16 @@ namespace SpiceBox.Repos
                 }
             }
         }
-        public User GetUserByFirebaseID(string firebaseId)
+        public User GetUserByFirebaseID(string uid)
         {
             using (SqlConnection conn = Connection)
             {
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Id, [Name], Email, FirebaseId FROM [User] WHERE FirebaseId = @firebaseId;";
+                    cmd.CommandText = @"SELECT Id, [Name], Email, FirebaseId FROM [User] WHERE FirebaseId = @uid;";
 
-                    cmd.Parameters.AddWithValue("@firebaseId", firebaseId);
+                    cmd.Parameters.AddWithValue("@uid", uid);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -115,16 +115,16 @@ namespace SpiceBox.Repos
             }
         }
 
-        public bool UserExists(string firebaseId)
+        public bool UserExists(string uid)
         {
             using (SqlConnection conn = Connection)
             {
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Id, [Name], Email, FirebaseId FROM [User] WHERE FirebaseId = @firebaseId;";
+                    cmd.CommandText = @"SELECT Id, [Name], Email, FirebaseId FROM [User] WHERE FirebaseId = @uid;";
 
-                    cmd.Parameters.AddWithValue("@firebaseId", firebaseId);
+                    cmd.Parameters.AddWithValue("@uid", uid);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 

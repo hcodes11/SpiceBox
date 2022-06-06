@@ -9,8 +9,8 @@ namespace SpiceBox.Repos
         void Delete(int id);
         List<User> GetAll();
         User GetById(int id);
-        User GetUserByFirebaseID(string firebaseId);
+        User GetUserByFirebaseID(string uid);
         void Update(User user);
-        bool UserExists(string firebaseId);
+        bool UserExists(string uid);
     }
 }

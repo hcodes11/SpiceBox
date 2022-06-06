@@ -15,7 +15,7 @@ const initialState = {
   userId:''
 };
 
-export default function RecipeForm() {
+export default function RecipeForm({user}) {
   const [formInput, setFormInput] = useState(initialState);
   const navigate = useNavigate();
   const [uid, setUID] = useState(null);

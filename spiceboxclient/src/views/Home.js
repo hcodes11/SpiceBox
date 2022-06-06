@@ -1,18 +1,27 @@
 import '../App.css';
-import { getAllRecipes } from '../api/data/recipeData';
+import { getAllUserRecipes } from '../api/data/recipeData';
 import React, { useEffect, useState } from 'react';
 import Recipe from '../components/Recipe';
 
-function Home() {
+function Home({ user }) {
   const [recipes, setRecipes] = useState([]);
+  // useEffect(() => {
+  //   getAllRecipes().then(setRecipes)
+  // }, []);
   useEffect(() => {
-    getAllRecipes().then(setRecipes)
+    let isMounted = true;
+    getAllUserRecipes(user.uid).then((recipetArray) => {
+      if (isMounted) setRecipes(recipetArray);
+    });
+    return () => {
+      isMounted = false;
+    };
   }, []);
   
   return (
     <>
     {recipes.map((recipe) => (
-      <Recipe key={recipe.id} recipe={recipe} />
+      <Recipe key={recipe.id} recipe={recipe} setRecipes={setRecipes}/>
     ))}
     </>
   );
