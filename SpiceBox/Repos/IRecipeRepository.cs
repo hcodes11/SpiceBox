@@ -10,6 +10,7 @@ namespace SpiceBox.Repos
         Recipe Get(int id);
         List<Recipe> GetAll();
         List<Recipe> GetAllUserRecipes(string uid);
+        List<Recipe> GetUserIdRecipes(int userid);
         void Update(Recipe recipe);
     }
 }

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import userId from './auth/UserId';
 const dbURL = "https://localhost:5001/api";
 
 const getAllRecipes = async () => {
@@ -8,11 +7,19 @@ const getAllRecipes = async () => {
   return recipeData;
 };
 
-const getAllUserRecipes = async (uid) => {
-  const recipe = await axios.get(`${dbURL}/recipe/${uid}`);
-  const recipeData = recipe.data;
-  return recipeData;
-};
+// const getAllUserRecipes = async (uid) => {
+//   const recipe = await axios.get(`${dbURL}/recipe/${uid}`);
+//   const recipeData = recipe.data;
+//   return recipeData;
+// };
+
+const getAllUserRecipes = (uid) =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(`${dbURL}/recipe/${uid}`)
+      .then((response) => resolve(Object.values(response.data)))
+      .catch(reject);
+  });
 
 const createRecipe = (recipe, token) =>
   new Promise((resolve, reject) => {
@@ -35,11 +42,11 @@ const createRecipe = (recipe, token) =>
       .catch(reject);
   });
 
-const deleteRecipe = (RecipeId) =>
+const deleteRecipe = (RecipeId, uid) =>
   new Promise((resolve, reject) => {
     axios
       .delete(`${dbURL}/recipe/${RecipeId}`)
-      .then(() => getAllUserRecipes(userId).then(resolve))
+      .then(() => getAllUserRecipes(uid).then(resolve))
       .catch(reject);
   });
 

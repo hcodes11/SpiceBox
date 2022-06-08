@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Home from './views/Home';
 import NewRecipe from './views/NewRecipe';
 import Details from './views/Details';
-import PropTypes from "prop-types";
+
 
 export default function Switch({user}) {
     return (

@@ -130,6 +130,44 @@ namespace SpiceBox.Repos
             }
         }
 
+        public List<Recipe> GetUserIdRecipes(int userid)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, [Name], ImageUrl, Time, Ingredients, Instructions, Comments, UserId
+                                        FROM Recipe 
+                                        WHERE UserId = @userid;";
+                    cmd.Parameters.AddWithValue("@userid", userid);
+
+                    var reader = cmd.ExecuteReader();
+
+                    var recipes = new List<Recipe>();
+                    while (reader.Read())
+                    {
+                        var recipe = new Recipe()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name")),
+                            ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
+                            Time = reader.GetString(reader.GetOrdinal("Time")),
+                            Ingredients = reader.GetString(reader.GetOrdinal("Ingredients")),
+                            Instructions = reader.GetString(reader.GetOrdinal("Instructions")),
+                            Comments = reader.GetString(reader.GetOrdinal("Comments")),
+                            UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
+                        };
+                        recipes.Add(recipe);
+                    }
+
+                    reader.Close();
+
+                    return recipes;
+                }
+            }
+        }
+
         public void Add(Recipe recipe)
         {
             using (var conn = Connection)

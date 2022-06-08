@@ -22,13 +22,14 @@ namespace SpiceBox.Controllers
             _userRepository = userRepository;
         }
 
-        // https://localhost:5001/api/recipe/
+        // https://localhost:5001/api/recipe/all
         [HttpGet("all")]
         public IActionResult Get()
         {
             return Ok(_recipeRepository.GetAll());
         }
 
+        // https://localhost:5001/api/recipe/firebaseId
         [HttpGet("{uid}")]
         public IActionResult Get(string uid)
         {
@@ -39,6 +40,7 @@ namespace SpiceBox.Controllers
             }
             return Ok(recipes);
         }
+
 
         // https://localhost:5001/api/recipe/5
         [HttpGet("Id/{id}")]
@@ -51,7 +53,7 @@ namespace SpiceBox.Controllers
             }
             return Ok(recipe);
         }
-        // https://localhost:5001/api/recipe/
+        // https://localhost:5001/api/recipe/firebaseId
         //[Authorize]
         [HttpPost("{fireId}")]
         public IActionResult Post(string fireId, [FromBody] Recipe recipe)
@@ -62,6 +64,19 @@ namespace SpiceBox.Controllers
             _recipeRepository.Add(recipe);
             return CreatedAtAction("Get", new { id = recipe.Id }, recipe);
         }
+
+        //// https://localhost:5001/api/recipe/5
+        //[HttpPut("{id}")]
+        //public IActionResult Put(int id, [FromBody] Recipe recipe)
+        //{
+        //    if (id != recipe.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    _recipeRepository.Update(recipe);
+        //    return NoContent();
+        //}
 
         // https://localhost:5001/api/recipe/5
         [HttpPut("{id}")]
@@ -75,6 +90,8 @@ namespace SpiceBox.Controllers
             _recipeRepository.Update(recipe);
             return NoContent();
         }
+
+
 
         // https://localhost:5001/api/recipe/5
         [HttpDelete("{id}")]
