@@ -25,7 +25,8 @@ function App() {
           uid: authed.uid,
           fullName: authed.displayName,
           profilePic: authed.photoURL,
-          username: authed.email.split('@')[0],          
+          username: authed.email.split('@')[0], 
+          token: authed.accessToken,         
         };
         setUser(userObj);
       } else if (user || user === null) {

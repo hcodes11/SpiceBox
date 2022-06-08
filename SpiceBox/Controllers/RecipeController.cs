@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SpiceBox.Models;
 using SpiceBox.Repos;
@@ -14,9 +15,11 @@ namespace SpiceBox.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly IRecipeRepository _recipeRepository;
-        public RecipeController(IRecipeRepository recipeRepository)
+        private readonly IUserRepository _userRepository;
+        public RecipeController(IRecipeRepository recipeRepository, IUserRepository userRepository)
         {
             _recipeRepository = recipeRepository;
+            _userRepository = userRepository;
         }
 
         // https://localhost:5001/api/recipe/
@@ -48,11 +51,14 @@ namespace SpiceBox.Controllers
             }
             return Ok(recipe);
         }
-
         // https://localhost:5001/api/recipe/
-        [HttpPost]
-        public IActionResult Post([FromBody] Recipe recipe)
+        //[Authorize]
+        [HttpPost("{fireId}")]
+        public IActionResult Post(string fireId, [FromBody] Recipe recipe)
         {
+            //var fireId = User.FindFirst(claim => claim.Type == "user_id").Value;
+            var user = _userRepository.GetUserByFirebaseID(fireId);
+            recipe.UserId = user.Id;
             _recipeRepository.Add(recipe);
             return CreatedAtAction("Get", new { id = recipe.Id }, recipe);
         }
