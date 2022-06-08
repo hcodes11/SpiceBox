@@ -2,16 +2,16 @@ import '../App.css';
 import { getAllUserRecipes } from '../api/data/recipeData';
 import React, { useEffect, useState } from 'react';
 import Recipe from '../components/Recipe';
+import auth from '../api/data/auth/firebaseConfig';
 
-function Home({ user }) {
+function Home() {
   const [recipes, setRecipes] = useState([]);
-  // useEffect(() => {
-  //   getAllRecipes().then(setRecipes)
-  // }, []);
+  const fireId = auth.currentUser?.uid;
   useEffect(() => {
     let isMounted = true;
-    getAllUserRecipes(user.uid).then((recipetArray) => {
-      if (isMounted) setRecipes(recipetArray);
+    getAllUserRecipes(fireId).then((recipeArray) => {
+      console.warn(fireId);
+      if (isMounted) setRecipes(recipeArray);
     });
 
     return () => {

@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert } from 'reactstrap';
-import { deleteRecipe } from '../api/data/recipeData';
+import { deleteRecipe  } from '../api/data/recipeData';
+import auth from '../api/data/auth/firebaseConfig';
 
-export default function Recipe({ recipe, setRecipes }) {
+export default function Recipe({ recipe, setRecipes}) {
+  const fireId = auth.currentUser?.uid;
   const handleClick = (method) => {
     if (method === 'delete') {
-      deleteRecipe(recipe.id).then(setRecipes);
+      deleteRecipe(recipe.id, fireId).then(setRecipes);
     }
   }
+
   return (
     <>
       <Alert color="light">
@@ -30,8 +33,8 @@ Recipe.propTypes = {
     ingredients: PropTypes.string,
     instructions: PropTypes.string,
     comments: PropTypes.string,
-    userId: PropTypes.number,
-  }),
+    userId: PropTypes.number
+  }).isRequired,
   setRecipes: PropTypes.func.isRequired,
 };
 

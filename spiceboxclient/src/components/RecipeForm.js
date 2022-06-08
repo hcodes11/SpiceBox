@@ -18,7 +18,6 @@ export default function RecipeForm({firebaseUser}) {
   
   const [formInput, setFormInput] = useState(initialState);
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
   const [uid, setUid] = useState(null);
   const { recipeId } = useParams();
 

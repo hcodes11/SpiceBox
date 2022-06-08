@@ -19,14 +19,14 @@ namespace SpiceBox.Controllers
             _userRepository = userRepository;
         }
 
-        // https://localhost:5001/api/user/
+        // https://localhost:5001/api/user/all
         [HttpGet("all")]
         public IActionResult Get()
         {
             return Ok(_userRepository.GetAll());
         }
 
-        // https://localhost:5001/api/user/5
+        // https://localhost:5001/api/user/firebaseId
         [HttpGet("FirebaseId/{firebaseId}")]
         public IActionResult Get(string firebaseId)
         {
