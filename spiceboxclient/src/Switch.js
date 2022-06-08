@@ -10,7 +10,7 @@ export default function Switch({user}) {
       <Routes>
         <Route path='/' element={<Home user={user} />} />
         <Route path='/recipe' element={<NewRecipe user={user} />} />
-        <Route path='/details' element={<Details user={user} />} />
+        <Route path='/details/:recipeId' element={<Details user={user} />} />
       </Routes>
   );
 }

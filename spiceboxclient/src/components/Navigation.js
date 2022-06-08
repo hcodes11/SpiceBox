@@ -24,13 +24,6 @@ export default function Navigation({user}) {
         >
           Add a Recipe
         </button>
-        <button
-          onClick={() => navigate('/details')}
-          type="button"
-          className="btn btn-light border border-dark"
-        >
-          Details
-        </button>
         <button type='button' onClick={signOutUser}>Sign Out</button>
       </ButtonGroup>
     </div>

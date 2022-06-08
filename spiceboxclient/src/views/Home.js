@@ -13,6 +13,7 @@ function Home({ user }) {
     getAllUserRecipes(user.uid).then((recipetArray) => {
       if (isMounted) setRecipes(recipetArray);
     });
+
     return () => {
       isMounted = false;
     };

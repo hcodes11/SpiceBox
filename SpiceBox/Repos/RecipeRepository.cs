@@ -28,7 +28,7 @@ namespace SpiceBox.Repos
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Id, [Name], ImageUrl, Time, Favorite, Ingredients, Instructions, Comments, UserId FROM Recipe;";
+                    cmd.CommandText = "SELECT Id, [Name], ImageUrl, Time, Ingredients, Instructions, Comments, UserId FROM Recipe;";
                     var reader = cmd.ExecuteReader();
                     var recipes = new List<Recipe>();
                     while (reader.Read())
@@ -39,7 +39,6 @@ namespace SpiceBox.Repos
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
                             Time = reader.GetString(reader.GetOrdinal("Time")),
-                            Favorite = reader.GetBoolean(reader.GetOrdinal("Favorite")),
                             Ingredients = reader.GetString(reader.GetOrdinal("Ingredients")),
                             Instructions = reader.GetString(reader.GetOrdinal("Instructions")),
                             Comments = reader.GetString(reader.GetOrdinal("Comments")),
@@ -63,7 +62,7 @@ namespace SpiceBox.Repos
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, [Name], ImageUrl, Time, Favorite, Ingredients, Instructions, Comments, UserId FROM Recipe
+                        SELECT Id, [Name], ImageUrl, Time, Ingredients, Instructions, Comments, UserId FROM Recipe
                          WHERE Id = @id;";
                     cmd.Parameters.AddWithValue("@id", id);
 
@@ -78,7 +77,6 @@ namespace SpiceBox.Repos
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
                             Time = reader.GetString(reader.GetOrdinal("Time")),
-                            Favorite = reader.GetBoolean(reader.GetOrdinal("Favorite")),
                             Ingredients = reader.GetString(reader.GetOrdinal("Ingredients")),
                             Instructions = reader.GetString(reader.GetOrdinal("Instructions")),
                             Comments = reader.GetString(reader.GetOrdinal("Comments")),
@@ -100,7 +98,7 @@ namespace SpiceBox.Repos
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Recipe.Id, Recipe.[Name], ImageUrl, Time, Favorite, Ingredients, Instructions, Comments, UserId,  [User].FirebaseId
+                    cmd.CommandText = @"SELECT Recipe.Id, Recipe.[Name], ImageUrl, Time, Ingredients, Instructions, Comments, UserId,  [User].FirebaseId
                                         FROM Recipe 
                                         LEFT JOIN [User] ON [User].Id = Recipe.UserId
                                         WHERE [User].FirebaseId =  @uid;";
@@ -117,7 +115,6 @@ namespace SpiceBox.Repos
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
                             Time = reader.GetString(reader.GetOrdinal("Time")),
-                            Favorite = reader.GetBoolean(reader.GetOrdinal("Favorite")),
                             Ingredients = reader.GetString(reader.GetOrdinal("Ingredients")),
                             Instructions = reader.GetString(reader.GetOrdinal("Instructions")),
                             Comments = reader.GetString(reader.GetOrdinal("Comments")),
@@ -141,13 +138,12 @@ namespace SpiceBox.Repos
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO Recipe ([Name], ImageUrl, Time, Favorite, Ingredients, Instructions, Comments, UserId)
+                        INSERT INTO Recipe ([Name], ImageUrl, Time, Ingredients, Instructions, Comments, UserId)
                         OUTPUT INSERTED.ID
-                        VALUES (@name, @imageurl, @time, @favorite, @ingredients, @instructions, @comments, @userid)";
+                        VALUES (@name, @imageurl, @time, @ingredients, @instructions, @comments, @userid)";
                     cmd.Parameters.AddWithValue("@name", recipe.Name);
                     cmd.Parameters.AddWithValue("@imageurl", recipe.ImageUrl);
                     cmd.Parameters.AddWithValue("@time", recipe.Time);
-                    cmd.Parameters.AddWithValue("@favorite", recipe.Favorite);
                     cmd.Parameters.AddWithValue("@ingredients", recipe.Ingredients);
                     cmd.Parameters.AddWithValue("@instructions", recipe.Instructions);
                     cmd.Parameters.AddWithValue("@comments", recipe.Comments);
@@ -170,7 +166,6 @@ namespace SpiceBox.Repos
                            SET [Name] = @name, 
                                ImageUrl = @imageurl, 
                                Time = @time,
-                               Favorite =@favorite,
                                Ingredients=@ingredients,
                                Instructions=@instructions,
                                Comments=@comments,
@@ -180,7 +175,6 @@ namespace SpiceBox.Repos
                     cmd.Parameters.AddWithValue("@name", recipe.Name);
                     cmd.Parameters.AddWithValue("@imageurl", recipe.ImageUrl);
                     cmd.Parameters.AddWithValue("@time", recipe.Time);
-                    cmd.Parameters.AddWithValue("@favorite", recipe.Favorite);
                     cmd.Parameters.AddWithValue("@ingredients", recipe.Ingredients);
                     cmd.Parameters.AddWithValue("@instructions", recipe.Instructions);
                     cmd.Parameters.AddWithValue("@comments", recipe.Comments);

@@ -16,6 +16,14 @@ const getSingleUser = (uid) =>
       .catch(reject);
   });
 
+  const getSingleUserByFireId = (uid) =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(`${dbURL}/User/FirebaseId/${uid}`)
+      .then((response) => resolve(response.data))
+      .catch(reject);
+  });
+
   const createUser = (user) =>
   new Promise((resolve, reject) => {
     axios.post(`${dbURL}/user`, user).then(resolve).catch(reject);
@@ -30,4 +38,4 @@ const updateUser = (uid, user) =>
       .catch(reject);
   });
 
-export { getAllUsers, getSingleUser, createUser, updateUser };
+export { getAllUsers, getSingleUser, getSingleUserByFireId, createUser, updateUser };

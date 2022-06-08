@@ -8,17 +8,18 @@ const initialState = {
   name: '',
   imageUrl: '',
   time: '',
-  favorite: '',
   ingredients: '',
   instructions: '',
   comments: '',
-  userId:''
+  uid:''
 };
 
-export default function RecipeForm({user}) {
+export default function RecipeForm({firebaseUser}) {
+  
   const [formInput, setFormInput] = useState(initialState);
   const navigate = useNavigate();
-  const [uid, setUID] = useState(null);
+  const [user, setUser] = useState(null);
+  const [uid, setUid] = useState(null);
   const { recipeId } = useParams();
 
   useEffect(() => {
@@ -27,17 +28,16 @@ export default function RecipeForm({user}) {
         setFormInput({
           name: recipeObj.name,
           imageUrl: recipeObj.imageUrl,
-          time: recipeObj.ime,
-          favorite: recipeObj.favorite,
+          time: recipeObj.time,
           ingredients: recipeObj.ingredients,
           instructions: recipeObj.instructions,
           comments: recipeObj.comments,
           userId: recipeObj.userId
-        })
+      })
       })
     } else {
       const currentUID = auth.currentUser?.uid;
-      setUID(currentUID);
+      setUid(currentUID);
       setFormInput(initialState);
     }
   }, [])
@@ -61,7 +61,8 @@ export default function RecipeForm({user}) {
         navigate('/');
       })
     } else {
-      createRecipe({ ...formInput, userId: uid }).then(() => {
+      console.log(firebaseUser.token);
+      createRecipe({ ...formInput }, firebaseUser.uid).then(() => {
         resetForm();
         navigate('/');
       })
@@ -106,16 +107,6 @@ export default function RecipeForm({user}) {
             <div>
               <input 
                onChange={(e) => handleChange(e)}
-               value={formInput.favorite || ''}
-               type="text"
-               name="favorite"
-               placeholder="Is this a favorite recipe?"
-               required
-              />
-            </div>
-            <div>
-              <input 
-               onChange={(e) => handleChange(e)}
                value={formInput.comments || ''}
                type="textarea"
                name="comments"
@@ -140,15 +131,6 @@ export default function RecipeForm({user}) {
                type="textarea"
                name="instructions"
                placeholder="How to cook this recipe?"
-               required
-              />
-            </div>
-            <div>
-              <input 
-               onChange={(e) => handleChange(e)}
-               value={formInput.uid || ''}
-               type="number"
-               name="uid"
                required
               />
             </div>

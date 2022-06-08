@@ -13,7 +13,6 @@ export default function Recipe({ recipe, setRecipes }) {
     <>
       <Alert color="light">
         {recipe.name}
-        {recipe.id}
       </Alert>
       <button onClick={() => handleClick('delete')} className="btn btn-danger" type="button">
           Delete
@@ -28,11 +27,10 @@ Recipe.propTypes = {
     name: PropTypes.string,
     imageUrl: PropTypes.string,
     time: PropTypes.string,
-    favorite: PropTypes.bool,
     ingredients: PropTypes.string,
     instructions: PropTypes.string,
     comments: PropTypes.string,
-    userId: PropTypes.string,
+    userId: PropTypes.number,
   }),
   setRecipes: PropTypes.func.isRequired,
 };

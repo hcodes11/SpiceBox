@@ -14,10 +14,9 @@ const getAllUserRecipes = async (uid) => {
   return recipeData;
 };
 
-
-const createRecipe = (recipe) =>
+const createRecipe = (recipe, token) =>
   new Promise((resolve, reject) => {
-    axios.post(`${dbURL}/recipe`, recipe).then(resolve).catch(reject);
+    axios.post(`${dbURL}/recipe/${token}`, recipe).then(resolve).catch(reject);
   });
 
   const getSingleRecipe = (RecipeId) =>
