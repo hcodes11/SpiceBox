@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Alert } from 'reactstrap';
 import { deleteRecipe  } from '../api/data/recipeData';
 import auth from '../api/data/auth/firebaseConfig';
+import { Link } from 'react-router-dom';
 
 export default function Recipe({ recipe, setRecipes}) {
   const fireId = auth.currentUser?.uid;
@@ -15,11 +16,21 @@ export default function Recipe({ recipe, setRecipes}) {
   return (
     <>
       <Alert color="light">
-        {recipe.name}
-      </Alert>
+      <button className="btn btn-light" type="button">{recipe.name}</button>
+      <div>
+        <Link to={`/edit/${recipe.id}`} className="btn btn-info">
+          Edit
+        </Link>
+        </div>
+        <div>
+        <Link to={`/details/${recipe.id}`} className="btn btn-info">
+          Details
+        </Link>
+        </div>
       <button onClick={() => handleClick('delete')} className="btn btn-danger" type="button">
           Delete
-        </button>
+      </button>
+      </Alert>
     </>
   );
 }

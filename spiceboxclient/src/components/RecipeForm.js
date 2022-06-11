@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import auth from '../api/data/auth/firebaseConfig';
 import { createRecipe, getSingleRecipe, updateRecipe  } from '../api/data/recipeData';
-
-
 const initialState = {
   name: '',
   imageUrl: '',
@@ -13,9 +11,8 @@ const initialState = {
   comments: '',
   uid:''
 };
-
 export default function RecipeForm({firebaseUser}) {
-  
+
   const [formInput, setFormInput] = useState(initialState);
   const navigate = useNavigate();
   const [uid, setUid] = useState(null);
@@ -40,18 +37,15 @@ export default function RecipeForm({firebaseUser}) {
       setFormInput(initialState);
     }
   }, [])
-
   const resetForm = () => {
     setFormInput({ ...initialState });
   };
-
   const handleChange = (e) => {
     setFormInput((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (recipeId) {

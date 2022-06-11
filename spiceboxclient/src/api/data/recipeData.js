@@ -7,12 +7,6 @@ const getAllRecipes = async () => {
   return recipeData;
 };
 
-// const getAllUserRecipes = async (uid) => {
-//   const recipe = await axios.get(`${dbURL}/recipe/${uid}`);
-//   const recipeData = recipe.data;
-//   return recipeData;
-// };
-
 const getAllUserRecipes = (uid) =>
   new Promise((resolve, reject) => {
     axios
@@ -37,7 +31,7 @@ const createRecipe = (recipe, token) =>
   const updateRecipe = (id, recipe) =>
   new Promise((resolve, reject) => {
     axios
-      .put(`${dbURL}/recipe/id/${id}`, recipe)
+      .put(`${dbURL}/recipe/${id}`, recipe)
       .then(() => getSingleRecipe().then(resolve))
       .catch(reject);
   });
