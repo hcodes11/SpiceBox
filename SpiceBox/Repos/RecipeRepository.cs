@@ -218,6 +218,7 @@ namespace SpiceBox.Repos
                     cmd.Parameters.AddWithValue("@comments", recipe.Comments);
                     cmd.Parameters.AddWithValue("@userid", recipe.UserId);
 
+                    cmd.ExecuteNonQuery();
 
                 }
             }

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Home from './views/Home';
 import NewRecipe from './views/NewRecipe';
 import Details from './views/Details';
+import Edit from './views/Edit';
 
 
 export default function Switch({user}) {
@@ -12,6 +13,7 @@ export default function Switch({user}) {
         <Route path='/' element={<Home user={user} />} />
         <Route path='/recipe' element={<NewRecipe user={user} />} />
         <Route path='/details/:recipeId' element={<Details user={user} />} />
+        <Route path="/edit/:id" element={<Edit user={user} />} />
       </Routes>
   );
 }

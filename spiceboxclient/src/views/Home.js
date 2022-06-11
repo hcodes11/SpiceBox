@@ -7,10 +7,10 @@ import auth from '../api/data/auth/firebaseConfig';
 function Home() {
   const [recipes, setRecipes] = useState([]);
   const fireId = auth.currentUser?.uid;
+  
   useEffect(() => {
     let isMounted = true;
     getAllUserRecipes(fireId).then((recipeArray) => {
-      console.warn(fireId);
       if (isMounted) setRecipes(recipeArray);
     });
 

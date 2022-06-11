@@ -82,16 +82,19 @@ namespace SpiceBox.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, Recipe recipe)
         {
-            if (id != recipe.Id)
+            Recipe dish = _recipeRepository.Get(id);
+            if (dish != null)
             {
-                return BadRequest();
+                _recipeRepository.Update(recipe);
+                return Ok(recipe);
+            }
+            else
+            {
+                return BadRequest(recipe);
+
             }
 
-            _recipeRepository.Update(recipe);
-            return NoContent();
         }
-
-
 
         // https://localhost:5001/api/recipe/5
         [HttpDelete("{id}")]
