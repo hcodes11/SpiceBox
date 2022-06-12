@@ -9,15 +9,8 @@ export default function Edit({ user }) {
   const { id } = useParams();
 
   useEffect(() => {
-    let isMounted = true;
-    getSingleRecipe(id).then((dish) => {
-        
-    if (isMounted) setEditItem(dish);
-    });
-    return () => {
-      isMounted = false;
-    };
-  });
+    getSingleRecipe(id).then(setEditItem);
+    }, []);
 
   return (
     <div>
