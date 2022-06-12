@@ -32,7 +32,7 @@ const createRecipe = (recipe, token) =>
   new Promise((resolve, reject) => {
     axios
       .put(`${dbURL}/recipe/${id}`, recipe)
-      .then(() => getSingleRecipe().then(resolve))
+      .then(() => getSingleRecipe(id).then(resolve))
       .catch(reject);
   });
 

@@ -38,6 +38,7 @@ namespace SpiceBox.Controllers
             return Ok(user);
         }
 
+
         // https://localhost:5001/api/user/
         [HttpPost]
         public IActionResult Post([FromBody] User user)
