@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { createRecipe, updateRecipe  } from '../api/data/recipeData';
 import { getUserByFirebase } from '../api/data/userData';
 import PropTypes from 'prop-types';
+
 
 
 const initialState = {
@@ -15,11 +16,12 @@ const initialState = {
   userId:''
 };
 export default function RecipeForm({ editRecipe, firebaseUser }) {
-  // const { id } = useParams();
+  console.warn(firebaseUser);
   const [formInput, setFormInput] = useState(initialState);
   const navigate = useNavigate();
+  
   const extractUid = async () => {
-    const user = await getUserByFirebase(firebaseUser.uid);
+    const user = await getUserByFirebase(firebaseUser.FirebaseId);
     setFormInput({...formInput, userId:user.id});
   }
 
@@ -37,7 +39,7 @@ export default function RecipeForm({ editRecipe, firebaseUser }) {
       });
     } 
     else {
-      extractUid(); 
+      extractUid();
     }
   }, [editRecipe]);
 
@@ -61,7 +63,7 @@ export default function RecipeForm({ editRecipe, firebaseUser }) {
       })
     } else {
       console.warn(formInput);
-      createRecipe({ ...formInput }, firebaseUser.uid).then(() => {
+      createRecipe({ ...formInput, userId: firebaseUser.id }, firebaseUser.FirebaseId).then(() => {
         resetForm();
         navigate('/');
       })

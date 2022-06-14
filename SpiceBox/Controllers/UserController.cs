@@ -39,6 +39,29 @@ namespace SpiceBox.Controllers
         }
 
 
+        [HttpPost("Login/")]
+        public IActionResult Login(User user)
+        {
+            
+            bool userexists = _userRepository.UserExists(user.FirebaseId);
+            if (!userexists)
+            {
+                User userFromLogin = new User
+                {
+                    Name = user.Name,
+                    FirebaseId = user.FirebaseId,
+                    Email = user.Email
+                };
+
+                _userRepository.Add(userFromLogin);
+                
+                return Ok(userFromLogin);
+            }
+            User existingUser = _userRepository.GetUserByFirebaseID(user.FirebaseId);
+            return Ok(existingUser);
+        }
+
+
         // https://localhost:5001/api/user/
         [HttpPost]
         public IActionResult Post([FromBody] User user)

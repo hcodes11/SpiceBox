@@ -15,7 +15,7 @@ export default function Navigation({user}) {
           type="button"
           className="btn btn-light border border-dark"
         >
-          {user.fullName}&apos;s Recipes
+          {user.name}&apos;s Recipes
         </button>
         <button
           onClick={() => navigate('/recipe')}

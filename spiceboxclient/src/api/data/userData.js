@@ -26,17 +26,24 @@ const getSingleUser = (uid) =>
 
   const getUserByFirebase = async (firebaseId) => {
     const user = await axios.get(`${dbURL}/User/FirebaseId/${firebaseId}`);
-    console.warn(user);
     const userData = user.data;
     return userData;
   };
 
 
-  const userInDB = (uid) => new Promise((resolve, reject) => {
-    axios.get(`${dbURL}/User/FirebaseId/${uid}`)
-    .then(response => resolve((response.data)))
-    .catch(reject);
+//   const userInDB = (uid) => new Promise((resolve, reject) => {
+//     axios.get(`${dbURL}/User/FirebaseId/${uid}`)
+//     .then(response => resolve((response.data)))
+//     .catch(reject);
+// });
+
+
+const checkUserCreatedInDB = (userObj) => new Promise((resolve, reject) => {
+  axios.post(`${dbURL}/User/Login/`, userObj)
+  .then(response => resolve((response.data)))
+  .catch(reject);
 });
+
 
   const createUser = (user) =>
   new Promise((resolve, reject) => {
@@ -57,7 +64,7 @@ export {
   getSingleUser, 
   getSingleUserByFireId, 
   createUser, 
-  updateUser, 
-  userInDB, 
+  updateUser,  
+  checkUserCreatedInDB,
   getUserByFirebase 
 };

@@ -6,6 +6,7 @@ import auth from './api/data/auth/firebaseConfig';
 import SignIn from './views/SignIn';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { checkUserCreatedInDB } from './api/data/userData';
 
 const Container = styled.div`
   display: flex;
@@ -22,13 +23,11 @@ function App() {
     auth.onAuthStateChanged(async (authed) => {
       if (authed) {
         const userObj = {
-          uid: authed.uid,
-          fullName: authed.displayName,
-          profilePic: authed.photoURL,
-          username: authed.email.split('@')[0], 
-          token: authed.accessToken,         
+          FirebaseId: authed.uid,
+          Name: authed.displayName,
+          Email: authed.email        
         };
-        setUser(userObj);
+        checkUserCreatedInDB(userObj).then(setUser);
       } else if (user || user === null) {
         setUser(false);  
         navigate('/');      
