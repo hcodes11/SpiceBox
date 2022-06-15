@@ -15,10 +15,17 @@ const getAllUserRecipes = (uid) =>
       .catch(reject);
   });
 
-const createRecipe = (recipe, token) =>
+// const createRecipe = (recipe, token) =>
+//   new Promise((resolve, reject) => {
+//     axios.post(`${dbURL}/recipe/${token}`, recipe).then(resolve).catch(reject);
+//   });
+
+//changing to accept userID
+  const createRecipe = (recipe) =>
   new Promise((resolve, reject) => {
-    axios.post(`${dbURL}/recipe/${token}`, recipe).then(resolve).catch(reject);
+    axios.post(`${dbURL}/recipe`, recipe).then(resolve).catch(reject);
   });
+
 
   const getSingleRecipe = (RecipeId) =>
   new Promise((resolve, reject) => {

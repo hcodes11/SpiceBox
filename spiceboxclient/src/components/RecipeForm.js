@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createRecipe, updateRecipe  } from '../api/data/recipeData';
-import { getUserByFirebase } from '../api/data/userData';
+import { getSingleUser } from '../api/data/userData';
 import PropTypes from 'prop-types';
 
 
@@ -16,13 +16,24 @@ const initialState = {
   userId:''
 };
 export default function RecipeForm({ editRecipe, firebaseUser }) {
-  console.warn(firebaseUser);
+  
   const [formInput, setFormInput] = useState(initialState);
   const navigate = useNavigate();
   
-  const extractUid = async () => {
-    const user = await getUserByFirebase(firebaseUser.FirebaseId);
+  // const extractUid = async () => {
+  //   const user = await getUserByFirebase(firebaseUser.FirebaseId);
+  //   setFormInput((prevState) => ({
+  //     ...prevState, userId:user.id}));
+  //   // setFormInput({...formInput, userId:user.id});
+  //   console.warn(user.id);
+  // }
+
+    const extractId = async () => {
+    const user = await getSingleUser(firebaseUser.id);
+    // setFormInput((prevState) => ({
+    //   ...prevState, userId:user.id}));
     setFormInput({...formInput, userId:user.id});
+    // console.warn(user.id);
   }
 
   useEffect(() => { 
@@ -39,7 +50,9 @@ export default function RecipeForm({ editRecipe, firebaseUser }) {
       });
     } 
     else {
-      extractUid();
+      extractId();
+      // setFormInput((prevState) => ({
+      //   ...prevState, userId:firebaseUser.id}));
     }
   }, [editRecipe]);
 
@@ -62,8 +75,9 @@ export default function RecipeForm({ editRecipe, firebaseUser }) {
         navigate('/');
       })
     } else {
-      console.warn(formInput);
-      createRecipe({ ...formInput, userId: firebaseUser.id }, firebaseUser.FirebaseId).then(() => {
+      // console.warn(`this is what going to create`,formInput);
+      // createRecipe({ ...formInput, userId: firebaseUser.id }, firebaseUser.FirebaseId).then(() => {
+        createRecipe({ ...formInput, userId: firebaseUser.id}).then(() => {
         resetForm();
         navigate('/');
       })

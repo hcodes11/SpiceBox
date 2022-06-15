@@ -54,13 +54,25 @@ namespace SpiceBox.Controllers
             return Ok(recipe);
         }
         // https://localhost:5001/api/recipe/firebaseId
-        //[Authorize]
-        [HttpPost("{fireId}")]
-        public IActionResult Post(string fireId, [FromBody] Recipe recipe)
+        //changing to userid from fireid
+        //[HttpPost("{fireId}")]
+        //public IActionResult Post(string fireId, [FromBody] Recipe recipe)
+        //{
+        //    //var fireId = User.FindFirst(claim => claim.Type == "user_id").Value;
+        //    var user = _userRepository.GetUserByFirebaseID(fireId);
+        //    recipe.UserId = user.Id;
+        //    _recipeRepository.Add(recipe);
+        //    return CreatedAtAction("Get", new { id = recipe.Id }, recipe);
+        //}
+
+        //[HttpPost("{userId}")]
+        [HttpPost]
+        public IActionResult Post([FromBody] Recipe recipe)
         {
             //var fireId = User.FindFirst(claim => claim.Type == "user_id").Value;
-            var user = _userRepository.GetUserByFirebaseID(fireId);
-            recipe.UserId = user.Id;
+            //var user = _userRepository.GetUserByFirebaseID(fireId);
+            //var user = _userRepository.GetById(userId);
+            //recipe.UserId = user.Id;
             _recipeRepository.Add(recipe);
             return CreatedAtAction("Get", new { id = recipe.Id }, recipe);
         }
