@@ -46,17 +46,10 @@ namespace SpiceBox.Controllers
             bool userexists = _userRepository.UserExists(user.FirebaseId);
             if (!userexists)
             {
-                User userFromLogin = new User
-                {
-                    Name = user.Name,
-                    FirebaseId = user.FirebaseId,
-                    Email = user.Email
-                };
-
-                _userRepository.Add(userFromLogin);
-                
-                return Ok(userFromLogin);
+                _userRepository.Add(user);
+                return Ok(user);
             }
+            
             User existingUser = _userRepository.GetUserByFirebaseID(user.FirebaseId);
             return Ok(existingUser);
         }

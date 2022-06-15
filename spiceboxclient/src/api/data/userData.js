@@ -8,10 +8,10 @@ const getAllUsers = async () => {
   return userData;
 };
 
-const getSingleUser = (uid) =>
+const getSingleUser = (id) =>
   new Promise((resolve, reject) => {
     axios
-      .get(`${dbURL}/User/Id/${uid}`)
+      .get(`${dbURL}/User/Id/${id}`)
       .then((response) => resolve(response.data))
       .catch(reject);
   });
