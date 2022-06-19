@@ -115,5 +115,11 @@ namespace SpiceBox.Controllers
             _recipeRepository.Delete(id);
             return NoContent();
         }
+
+        [HttpGet("search")]
+        public IActionResult Search(string q)
+        {
+            return Ok(_recipeRepository.Search(q));
+        }
     }
 }

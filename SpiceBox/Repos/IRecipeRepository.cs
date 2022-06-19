@@ -12,5 +12,6 @@ namespace SpiceBox.Repos
         List<Recipe> GetAllUserRecipes(string uid);
         List<Recipe> GetUserIdRecipes(int userid);
         void Update(Recipe recipe);
+        List<Recipe> Search(string term);
     }
 }

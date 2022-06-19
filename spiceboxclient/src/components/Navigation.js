@@ -1,31 +1,28 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
-import { ButtonGroup } from 'reactstrap';
 import { signOutUser } from '../api/data/auth/firebaseLogin';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
 
 export default function Navigation({user}) {
-  const navigate = useNavigate();
-  
+ 
   return (
-    <div className="text-center mb-3">
-      <ButtonGroup size="lg">
-        <button
-          onClick={() => navigate('/')}
-          type="button"
-          className="btn btn-light border border-dark"
-        >
-          {user.name}&apos;s Recipes
-        </button>
-        <button
-          onClick={() => navigate('/recipe')}
-          type="button"
-          className="btn btn-light border border-dark"
-        >
-          Add a Recipe
-        </button>
-        <button type='button' onClick={signOutUser}>Sign Out</button>
-      </ButtonGroup>
+    <div className="nav-header">
+      <div className="container-fluid">
+          <Link className='nav-link' to='/'>
+            {user.name}&apos;s Recipes
+          </Link>
+          <Link className='nav-link' to='/recipe'>
+          Add a New Recipe
+          </Link>
+          <button
+            onClick={signOutUser}
+            type="button"
+            className="btn same">
+              Sign Out
+          </button>
+         
+      </div>
     </div>
   );
 }
