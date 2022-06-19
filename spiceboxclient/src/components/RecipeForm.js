@@ -4,8 +4,6 @@ import { createRecipe, updateRecipe  } from '../api/data/recipeData';
 import { getSingleUser } from '../api/data/userData';
 import PropTypes from 'prop-types';
 
-
-
 const initialState = {
   name: '',
   imageUrl: '',
@@ -86,12 +84,14 @@ export default function RecipeForm({ editRecipe, firebaseUser }) {
  
   return (
     <>
-      <h1>{editRecipe ? (`Edit Recipe`) : (`Recipe Form`)}</h1>
+      <h5>{editRecipe ? (`Edit Recipe`) : (`Recipe Form`)}</h5>
       <form onSubmit={handleSubmit}>
-      <div>
-        <div>
+      <div className="form-group">
+        <label htmlFor="name">
+            Recipe Name<br/>
+        </label>
           <input 
-          onChange={(e) => handleChange(e)}
+          onChange={(e) => handleChange(e)} style={{ width: '30rem'  }}
           value={formInput.name || ''}
           type="text"
           name="name"
@@ -99,38 +99,51 @@ export default function RecipeForm({ editRecipe, firebaseUser }) {
           required
           />
         </div>
-        <div>
+        <div className="form-group">
+        <label htmlFor="imageUrl">
+           ImageURL<br/>
+           </label>
           <input 
-           onChange={(e) => handleChange(e)}
+           onChange={(e) => handleChange(e)} style={{ width: '30rem'  }}
            value={formInput.imageUrl || ''}
            type="url"
            name="imageUrl"
            placeholder="Paste ImageURL here..."
            required
           />
+           
         </div>
-        <div>
+        <div className="form-group">
+        <label htmlFor="time">
+           Time<br/>
           <input 
-           onChange={(e) => handleChange(e)}
+           onChange={(e) => handleChange(e)} style={{ width: '30rem'  }}
            value={formInput.time || ''}
            type="text"
            name="time"
            placeholder="Total time to cook..."
            required
           />
+          </label>
         </div>
-        <div>
+        <div className="form-group">
+        <label htmlFor="comments">
+           Comments<br/>
           <input 
-           onChange={(e) => handleChange(e)}
+           onChange={(e) => handleChange(e)} style={{ width: '30rem'  }}
            value={formInput.comments || ''}
            type="textarea"
            name="comments"
-           placeholder="Any comments on this recipe?"
+           placeholder="Any comments on recipe?"
            required
           />
+          </label>
         </div>
-        <div>
-          <input 
+        <div className="form-group">
+        <label htmlFor="ingredients">
+           Ingredients <br/>
+           </label>
+          <textarea rows="10" className="form-control" style={{ width: '30rem'  }}
            onChange={(e) => handleChange(e)}
            value={formInput.ingredients || ''}
            type="textarea"
@@ -140,7 +153,10 @@ export default function RecipeForm({ editRecipe, firebaseUser }) {
           />
         </div>
         <div>
-          <input 
+        <label htmlFor="instructions">
+           Instructions <br/>
+           </label>
+          <textarea rows="20" className="form-control" style={{ width: '30rem'  }}
            onChange={(e) => handleChange(e)}
            value={formInput.instructions || ''}
            type="textarea"
@@ -148,7 +164,6 @@ export default function RecipeForm({ editRecipe, firebaseUser }) {
            placeholder="How to cook this recipe?"
            required
           />
-        </div>
         </div>
         <button type='submit' className='btn btn-success'>
         {editRecipe ? (`Update`) : (`Submit`)}

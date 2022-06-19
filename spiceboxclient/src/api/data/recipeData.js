@@ -1,5 +1,5 @@
 import axios from 'axios';
-const dbURL = "https://localhost:5001/api";
+const dbURL = process.env.REACT_APP_DBURL;
 
 const getAllRecipes = async () => {
   const recipe = await axios.get(`${dbURL}/recipe/all`);
